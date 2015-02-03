@@ -1,0 +1,15 @@
+#news li {
+    list-style: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#news h3 {
+	margin: 0;
+}
+
+#news .date {
+    margin: 0;
+    margin-top: 3px;
+    font-size: 80%;	
+}
