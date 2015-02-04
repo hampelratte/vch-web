@@ -124,7 +124,7 @@ public class WelcomeServlet extends VchHttpServlet {
         news.setTitle(rbp.getResourceBundle().getString("I18N_NEWS"));
         news.setPreferredPosition(Integer.MIN_VALUE);
         news.setLinkUri(WelcomeServlet.PATH);
-        ServiceRegistration sr = ctx.registerService(IWebMenuEntry.class.getName(), news, null);
+        ServiceRegistration<IWebMenuEntry> sr = ctx.registerService(IWebMenuEntry.class, news, null);
         serviceRegs.add(sr);
     }
 

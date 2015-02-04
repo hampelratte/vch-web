@@ -22,16 +22,16 @@ public abstract class VchHttpServlet extends HttpServlet {
 
     protected Dictionary<?, ?> properties;
 
-    protected List<ServiceRegistration> serviceRegs = new LinkedList<ServiceRegistration>();
+    protected List<ServiceRegistration<?>> serviceRegs = new LinkedList<ServiceRegistration<?>>();
 
-    protected void unregisterService(ServiceRegistration sr) {
+    protected void unregisterService(ServiceRegistration<?> sr) {
         if (sr != null) {
             sr.unregister();
         }
     }
 
     protected void unregisterServices() {
-        for (ServiceRegistration reg : serviceRegs) {
+        for (ServiceRegistration<?> reg : serviceRegs) {
             unregisterService(reg);
         }
     }

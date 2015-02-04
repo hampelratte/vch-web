@@ -12,29 +12,29 @@ public class MenuBuilder {
 
     private static transient Logger logger = LoggerFactory.getLogger(MenuBuilder.class);
     
-    private ServiceTracker menuTracker;
+    private ServiceTracker<IWebMenuEntry, IWebMenuEntry> menuTracker;
     
     private IWebMenuEntry root;
     
     private boolean menuHasChanged = true;
     
     public MenuBuilder(final BundleContext ctx) {
-        menuTracker = new ServiceTracker(ctx, IWebMenuEntry.class.getName(), null) {
-            @Override
-            public void removedService(ServiceReference sr, Object service) {
-                menuHasChanged = true;
-                logger.debug("Menu entry removed {}", ((IWebMenuEntry)service).getTitle());
-                super.removedService(sr, service);
-            }
+        menuTracker = new ServiceTracker<IWebMenuEntry, IWebMenuEntry>(ctx, IWebMenuEntry.class, null) {
+			@Override
+			public void removedService(ServiceReference<IWebMenuEntry> reference, IWebMenuEntry service) {
+				menuHasChanged = true;
+				logger.debug("Menu entry removed {}", service.getTitle());
+				super.removedService(reference, service);
+			}
             
             @Override
-            public void modifiedService(ServiceReference sr, Object service) {
+            public void modifiedService(ServiceReference<IWebMenuEntry> sr, IWebMenuEntry service) {
                 menuHasChanged = true;
                 super.modifiedService(sr, service);
             }
             
             @Override
-            public Object addingService(ServiceReference sr) {
+            public IWebMenuEntry addingService(ServiceReference<IWebMenuEntry> sr) {
                 menuHasChanged = true;
                 return super.addingService(sr);
             }

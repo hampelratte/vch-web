@@ -39,7 +39,7 @@ public class WebInterface implements ResourceBundleProvider {
 
     public static final String STATIC_PATH = "/static";
 
-    private List<ServiceRegistration> menuRegs = new ArrayList<ServiceRegistration>();
+    private List<ServiceRegistration<?>> menuRegs = new ArrayList<ServiceRegistration<?>>();
 
     public WebInterface(final BundleContext ctx) throws IOException {
         this.ctx = ctx;
@@ -68,18 +68,18 @@ public class WebInterface implements ResourceBundleProvider {
         developer.setPreferredPosition(Integer.MAX_VALUE);
         help.getChilds().add(developer);
 
-        menuRegs.add(ctx.registerService(IWebMenuEntry.class.getName(), help, null));
+        menuRegs.add(ctx.registerService(IWebMenuEntry.class, help, null));
     }
 
     @Invalidate
     public void invalidate() throws Exception {
         unregisterHttpContext(httpService);
-        for (ServiceRegistration reg : menuRegs) {
+        for (ServiceRegistration<?> reg : menuRegs) {
             unregisterService(reg);
         }
     }
 
-    private void unregisterService(ServiceRegistration sr) {
+    private void unregisterService(ServiceRegistration<?> sr) {
         if (sr != null) {
             sr.unregister();
         }
