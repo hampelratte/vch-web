@@ -39,13 +39,39 @@ public abstract class VchHttpServlet extends HttpServlet {
     @Override
     final protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
-        get(req, resp);
+        try {
+            get(req, resp);
+        } catch (RuntimeException e) {
+            if (isAjaxRequest(req)) {
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                // resp.setContentType("application/json; charset=utf-8");
+                resp.setContentType("text/plain; charset=utf-8");
+                resp.getWriter().println(e.getLocalizedMessage());
+            } else {
+                throw e;
+            }
+        }
     }
 
     @Override
     final protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
-        post(req, resp);
+        try {
+            post(req, resp);
+        } catch (RuntimeException e) {
+            if (isAjaxRequest(req)) {
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                // resp.setContentType("application/json; charset=utf-8");
+                resp.setContentType("text/plain; charset=utf-8");
+                resp.getWriter().println(e.getLocalizedMessage());
+            } else {
+                throw e;
+            }
+        }
+    }
+
+    private boolean isAjaxRequest(HttpServletRequest req) {
+        return "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
     }
 
     protected abstract void get(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException;
