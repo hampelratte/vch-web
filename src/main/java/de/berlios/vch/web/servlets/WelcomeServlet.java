@@ -139,7 +139,7 @@ public class WelcomeServlet extends VchHttpServlet {
 
     private SyndFeed loadNewsFeed() throws IllegalArgumentException, MalformedURLException, FeedException, IOException {
         SyndFeedInput input = new SyndFeedInput();
-        SyndFeed feed = input.build(new XmlReader(new URL("http://www.hampelratte.org/blog/?feed=rss2")));
+        SyndFeed feed = input.build(new XmlReader(new URL("https://www.hampelratte.org/blog/?feed=rss2")));
         return feed;
     }
 
