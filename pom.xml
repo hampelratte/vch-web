@@ -3,7 +3,7 @@
     <artifactId>web</artifactId>
     <name>VCH Web Interface</name>
     <packaging>bundle</packaging>
-    <version>1.0.7</version>
+    <version>1.0.8-SNAPSHOT</version>
     <description>Web Frondend for VCH.</description>
 
     <parent>
